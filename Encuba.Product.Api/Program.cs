@@ -14,10 +14,6 @@ using Serilog.Exceptions;
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
-builder.Services.AddControllers()
-    .AddNewtonsoftJson(opt =>
-        opt.SerializerSettings.ContractResolver = new PrivateSetterContractResolver());
-
 // Load the configuration from appsettings.json and environment variables
 builder.Configuration.AddEnvironmentVariables();
 
@@ -45,7 +41,17 @@ builder.Services.AddSwaggerGen(c =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
-builder.Services.AddControllers();
+
+//JWT config
+builder.Services.AddOptions<JwtAuthenticationSettings>()
+    .Bind(configuration.GetSection("JWT"));
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddControllers(opt => opt.Filters.Add(typeof(JwtAuthorizationActionFilter)))
+    .AddNewtonsoftJson(opt =>
+        opt.SerializerSettings.ContractResolver = new PrivateSetterContractResolver());
+
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     containerBuilder.RegisterModule(new RepositoryModule()));

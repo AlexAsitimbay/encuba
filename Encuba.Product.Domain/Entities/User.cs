@@ -20,10 +20,14 @@ public class User : BaseEntity
     public Guid? ResetPasswordToken { get; set; }
     public DateTime? ResetPasswordTokenExpiresIn { get; set; }
     public Guid? PublicAccessTokenId { get; set; }
-
+    
+    private readonly List<ShoppingCart> _shoppingCarts;
+    public IReadOnlyCollection<ShoppingCart> ShoppingCarts => _shoppingCarts;
+    
     protected User()
     {
         Id = Guid.NewGuid();
+        _shoppingCarts = new List<ShoppingCart>();
     }
 
     public User(string userName, string userType, string firstName, string secondName, string firstLastName,

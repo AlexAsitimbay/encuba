@@ -71,5 +71,8 @@ public class UserEfConfig : IEntityTypeConfiguration<User>
         
         builder.HasIndex(t => t.Email)
             .IsUnique();
+        
+        builder.Metadata.FindNavigation(nameof(User.ShoppingCarts))
+            ?.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }
