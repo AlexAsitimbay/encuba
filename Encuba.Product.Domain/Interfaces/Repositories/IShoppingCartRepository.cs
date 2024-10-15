@@ -5,5 +5,5 @@ namespace Encuba.Product.Domain.Interfaces.Repositories;
 
 public interface IShoppingCartRepository : IRepository<ShoppingCart>
 {
-    ShoppingCart Add(ShoppingCart shoppingCart);
+    void AddRange(List<ShoppingCart> shoppingCarts);
 }

@@ -5,6 +5,7 @@ using Encuba.Product.Api.Configurations.AutofacConfig;
 using Encuba.Product.Domain.Seed;
 using Encuba.Product.Infrastructure;
 using Encuba.Product.Infrastructure.Middlewares;
+using Encuba.Product.Infrastructure.Redis;
 using Encuba.Product.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -65,7 +66,7 @@ builder.Services.AddOptions<JWT>()
 builder.Services.AddAuthentication("JWT")
     .AddScheme<JwtAuthenticationSchemaOptions, JwtAuthenticationHandler>("JWT", null);
 
-
+builder.Services.AddSingleton<RedisConfiguration>();
 //Add serilog
 var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(configuration)

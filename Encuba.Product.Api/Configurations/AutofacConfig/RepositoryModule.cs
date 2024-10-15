@@ -1,7 +1,9 @@
 ﻿using Autofac;
 using  Encuba.Product.Domain.Interfaces.Cryptography;
 using  Encuba.Product.Domain.Interfaces.Repositories;
+using Encuba.Product.Domain.Interfaces.Services;
 using Encuba.Product.Infrastructure.Cryptography;
+using Encuba.Product.Infrastructure.Redis;
 using Encuba.Product.Infrastructure.Repositories;
 
 namespace   Encuba.Product.Api.Configurations.AutofacConfig;
@@ -32,6 +34,10 @@ public class RepositoryModule : Module
         
         builder.RegisterType<ShoppingCartRepository>()
             .As<IShoppingCartRepository>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<CacheRepository>()
+            .As<ICacheRepository>()
             .InstancePerLifetimeScope();
     }
 }

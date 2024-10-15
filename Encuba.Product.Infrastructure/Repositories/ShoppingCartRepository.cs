@@ -8,8 +8,8 @@ public class ShoppingCartRepository(SecurityDbContext dbContext) : IShoppingCart
 {
     public IUnitOfWork UnitOfWork => dbContext;
 
-    public ShoppingCart Add(ShoppingCart shoppingCart)
+    public void AddRange(List<ShoppingCart> shoppingCarts)
     {
-        return dbContext.Add(shoppingCart).Entity;
+        dbContext.AddRange(shoppingCarts);
     }
 }
