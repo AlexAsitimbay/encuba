@@ -9,6 +9,8 @@ public class SecurityDbContext(DbContextOptions<SecurityDbContext> options) : Db
     public DbSet<User> Users { get; set; }
     public DbSet<PublicAccessToken> PublicAccessTokens { get; set; }
     public DbSet<UserPublicAccessToken> UserPublicAccessTokens { get; set; }
+    public DbSet<Domain.Entities.Product> Products { get; set; }
+    public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
     public async Task<bool> SaveEntityAsync(CancellationToken cancellationToken = default)
     {

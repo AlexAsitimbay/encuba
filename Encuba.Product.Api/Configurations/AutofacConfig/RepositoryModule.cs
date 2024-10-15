@@ -25,5 +25,13 @@ public class RepositoryModule : Module
         builder.RegisterType<BCryptCryptographyHelper >()
             .As<IBCryptCryptographyHelper >()
             .InstancePerLifetimeScope();
+        
+        builder.RegisterType<ProductRepository>()
+            .As<IProductRepository>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<ShoppingCartRepository>()
+            .As<IShoppingCartRepository>()
+            .InstancePerLifetimeScope();
     }
 }

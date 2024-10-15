@@ -4,8 +4,8 @@ namespace Encuba.Product.Domain.Interfaces.Repositories;
 
 public interface IProductRepository: IRepository<Entities.Product>
 {
-    void Add(Entities.Product product);
-    void Update(Entities.Product product);
+    Entities.Product Add(Entities.Product product);
+    Entities.Product Update(Entities.Product product);
     void Delete(Entities.Product product);
     Task<Entities.Product> GetById(Guid id);
     Task<List<Entities.Product>> GetAll();

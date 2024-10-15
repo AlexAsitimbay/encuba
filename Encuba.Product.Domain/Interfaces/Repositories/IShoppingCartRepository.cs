@@ -3,7 +3,7 @@ using Encuba.Product.Domain.Seed;
 
 namespace Encuba.Product.Domain.Interfaces.Repositories;
 
-public interface IShoppingCart : IRepository<ShoppingCart>
+public interface IShoppingCartRepository : IRepository<ShoppingCart>
 {
-    void Add(ShoppingCart shoppingCart);
+    ShoppingCart Add(ShoppingCart shoppingCart);
 }
