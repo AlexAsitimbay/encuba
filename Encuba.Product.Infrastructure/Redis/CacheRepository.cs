@@ -11,7 +11,8 @@ public class CacheRepository(RedisConfiguration redisConfiguration) : ICacheRepo
     public async Task AddItemAsync<T>(string key, T value)
     {
         var jsonData = JsonSerializer.Serialize(value);
-        await _db.StringSetAsync(key, jsonData);
+        var expiry = TimeSpan.FromMinutes(60);
+        await _db.StringSetAsync(key, jsonData, expiry);
     }
 
     public async Task<T?> GetItemAsync<T>(string key)

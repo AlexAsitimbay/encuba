@@ -13,11 +13,9 @@ public class RedisConfiguration
         _configuration = configuration;
 
         var connectionString = _configuration["Redis:ConnectionString"];
-        var user = _configuration["Redis:User"];
         var password = _configuration["Redis:Password"];
         
         var options = ConfigurationOptions.Parse(connectionString);
-        options.User = user;
         options.Password = password;
         
         Connection = ConnectionMultiplexer.Connect(options);
