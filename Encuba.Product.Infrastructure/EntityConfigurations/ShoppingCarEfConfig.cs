@@ -13,9 +13,15 @@ public class ShoppingCarEfConfig : IEntityTypeConfiguration<ShoppingCart>
         builder.HasKey(t => t.Id);
 
         builder.Property(t => t.UserId)
-            .IsUnicode(false);
+            .IsRequired();
         
         builder.Property(t => t.ProductId)
-            .IsUnicode(false);
+            .IsRequired();
+        
+        builder.Property(t => t.OrderId)
+            .IsRequired();
+        
+        builder.Property(t => t.CreatedAt)
+            .IsRequired();
     }
 }
