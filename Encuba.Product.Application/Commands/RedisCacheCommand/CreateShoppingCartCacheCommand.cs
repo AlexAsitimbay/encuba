@@ -1,12 +1,13 @@
-﻿using Encuba.Product.Domain.Dtos;
+﻿using Encuba.Product.Application.Dtos.Responses;
+using Encuba.Product.Domain.Dtos;
 using MediatR;
 
 namespace Encuba.Product.Application.Commands.RedisCacheCommand;
 
 public record CreateShoppingCartCacheCommand(
-    List<Guid> ProductIds,
     Guid UserId,
-    int Quantity
+    int Quantity,
+    List<ProductResponse> ProductResponses
     ) : IRequest<EntityResponse<bool>>
 {
     

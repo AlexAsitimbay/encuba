@@ -1,6 +1,8 @@
 ﻿using System.Net;
+using Encuba.Product.Api.Dtos.ProductRequests;
 using Encuba.Product.Api.Dtos.ShoppingCartRequests;
 using Encuba.Product.Application.Commands.RedisCacheCommand;
+using Encuba.Product.Application.Dtos.Responses;
 using Encuba.Product.Domain.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +37,7 @@ public class ShoppingCartController(ILogger<ProductController> logger, ISender s
 
         return CreatedAtAction(nameof(Create), response);
     }
-    
+
     [HttpPost]
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -61,5 +63,31 @@ public class ShoppingCartController(ILogger<ProductController> logger, ISender s
 
         return CreatedAtAction(nameof(Create), response);
     }
-    
+
+    [HttpGet]
+    [ProducesResponseType((int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+    [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+    [Produces(typeof(ProductResponse))]
+    [ProducesErrorResponseType(typeof(EntityErrorResponse))]
+    [Route("{id}/by-id-cache")]
+    public async Task<IActionResult> GetById(string id)
+    {
+        var request = new ReadShoppingCartCacheRequest();
+        var query = request.ToApplicationRequest(id);
+
+        logger.LogInformation(
+            "----- Sending query: {QueryName} {@Query})",
+            nameof(query),
+            query);
+
+        var response = await sender.Send(query);
+        if (!response.IsSuccess)
+        {
+            return BadRequest(response.EntityErrorResponse);
+        }
+
+        return Ok(response);
+    }
 }

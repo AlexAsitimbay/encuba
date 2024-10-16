@@ -1,6 +1,9 @@
-﻿namespace Encuba.Product.Application.Dtos.Requests;
+﻿using Encuba.Product.Application.Dtos.Responses;
+
+namespace Encuba.Product.Application.Dtos.Requests;
 
 public record ProductCacheResponse(
     Guid UserId,
-    List<Guid> ProductIds,
-    int Quantity);
+    int Quantity,
+    List<ProductResponse> ProductResponses
+);

@@ -11,7 +11,7 @@ public class CreateShoppingCartCacheCommandHandler(ICacheRepository cacheReposit
     public async Task<EntityResponse<bool>> Handle(CreateShoppingCartCacheCommand command,
         CancellationToken cancellationToken)
     {
-        var cart = new ProductCacheResponse(command.UserId, command.ProductIds, command.Quantity);
+        var cart = new ProductCacheResponse(command.UserId, command.Quantity, command.ProductResponses);
         await cacheRepository.AddItemAsync(command.UserId.ToString(), cart);
         return EntityResponse.Success(true);
     }
