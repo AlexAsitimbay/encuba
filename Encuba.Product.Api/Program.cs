@@ -67,6 +67,17 @@ builder.Services.AddAuthentication("JWT")
     .AddScheme<JwtAuthenticationSchemaOptions, JwtAuthenticationHandler>("JWT", null);
 
 builder.Services.AddSingleton<RedisConfiguration>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:4200")  // La dirección que deseas permitir
+                .AllowAnyMethod()                       // Permitir cualquier método (GET, POST, etc.)
+                .AllowAnyHeader()                       // Permitir cualquier encabezado
+                .AllowCredentials();                     // Permitir credenciales si es necesario
+        });
+});
 //Add serilog
 var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(configuration)
@@ -91,6 +102,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowSpecificOrigin");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
